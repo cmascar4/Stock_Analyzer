@@ -7,15 +7,15 @@ import plotly.graph_objects as go
 import streamlit as st
 from plotly.subplots import make_subplots
 
-# Make `import Stock_Analyzer.*` work no matter where streamlit is launched from.
-PACKAGE_ROOT = Path(__file__).resolve().parent.parent  # .../Stock_Analyzer/
-REPO_ROOT = PACKAGE_ROOT.parent                        # parent that contains the package
+# Put the repo root on sys.path so `import config` / `from src.* import ...` work
+# regardless of where streamlit is launched from.
+REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO_ROOT))
 
-import Stock_Analyzer.config as config  # noqa: E402
-from Stock_Analyzer.src.features import add_technical_indicators  # noqa: E402
-from Stock_Analyzer.src.fetcher import fetch_all, fetch_fundamentals, fetch_ticker  # noqa: E402
-from Stock_Analyzer.src.predictor import PricePredictor  # noqa: E402
+import config  # noqa: E402
+from src.features import add_technical_indicators  # noqa: E402
+from src.fetcher import fetch_all, fetch_fundamentals, fetch_ticker  # noqa: E402
+from src.predictor import PricePredictor  # noqa: E402
 
 # ---------------------------------------------------------------------------
 # Page configuration

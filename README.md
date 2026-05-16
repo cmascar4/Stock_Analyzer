@@ -30,7 +30,7 @@ The default ticker list (33 names) is in [config.py](config.py) and covers broad
 ### Install
 
 ```bash
-git clone https://github.com/<your-username>/Stock_Analyzer.git
+git clone https://github.com/cmascar4/Stock_Analyzer.git
 cd Stock_Analyzer
 
 python -m venv .venv
@@ -39,15 +39,15 @@ python -m venv .venv
 # macOS / Linux
 source .venv/bin/activate
 
-pip install -r Stock_Analyzer/requirements.txt
+pip install -r requirements.txt
 ```
 
 ### Run
 
-From the **repo root** (the folder containing the `Stock_Analyzer/` package):
+From the repo root:
 
 ```bash
-streamlit run Stock_Analyzer/dashboard/app.py
+streamlit run dashboard/app.py
 ```
 
 Streamlit will open at <http://localhost:8501>.
@@ -63,21 +63,21 @@ Open the **⚙️ Train Models** page in the sidebar, pick tickers + training pe
 ## Project layout
 
 ```
-Stock_Analyzer/                  ← repo root (clone target)
+Stock_Analyzer/              ← repo root (clone target)
 ├── README.md
-└── Stock_Analyzer/              ← Python package
-    ├── config.py                ← tickers + hyperparameters
-    ├── requirements.txt
-    ├── dashboard/
-    │   └── app.py               ← Streamlit entry point
-    ├── src/
-    │   ├── fetcher.py           ← yfinance download + CSV cache
-    │   ├── features.py          ← 24 technical indicators
-    │   └── predictor.py         ← XGBoost regressor wrapper
-    ├── data/
-    │   ├── raw/                 ← cached OHLCV CSVs (gitignored)
-    │   └── processed/
-    └── models/                  ← saved .pkl predictors (gitignored)
+├── requirements.txt
+├── config.py                ← tickers + hyperparameters
+├── dashboard/
+│   └── app.py               ← Streamlit entry point
+├── src/
+│   ├── __init__.py
+│   ├── fetcher.py           ← yfinance download + CSV cache
+│   ├── features.py          ← 24 technical indicators
+│   └── predictor.py         ← XGBoost regressor wrapper
+├── data/
+│   ├── raw/                 ← cached OHLCV CSVs (gitignored)
+│   └── processed/
+└── models/                  ← saved .pkl predictors (gitignored)
 ```
 
 ---
@@ -108,10 +108,10 @@ This is the simplest path and is designed for exactly this use case.
 2. Go to <https://streamlit.io/cloud> and sign in with GitHub.
 3. Click **New app**, pick this repo, and set:
    - **Branch:** `main`
-   - **Main file path:** `Stock_Analyzer/dashboard/app.py`
+   - **Main file path:** `dashboard/app.py`
    - **Python version:** 3.10 or newer
-4. Under **Advanced settings → Requirements file**, point to `Stock_Analyzer/requirements.txt`.
-5. Deploy. First boot trains nothing — users can train from the **⚙️ Train Models** page, but model files won't persist across container restarts on the free tier. For a permanent demo, commit a few pre-trained `.pkl` files (remove `*.pkl` from `.gitignore` for those specific files).
+4. Streamlit Cloud auto-detects `requirements.txt` at the repo root.
+5. Deploy. First boot trains nothing — users can train from the **⚙️ Train Models** page, but model files won't persist across container restarts on the free tier. For a permanent demo, commit a few pre-trained `.pkl` files (remove `*.pkl` from `.gitignore` for those specific files, then `git add -f models/AAPL_predictor.pkl`).
 
 ### Hugging Face Spaces (also free, supports Streamlit)
 

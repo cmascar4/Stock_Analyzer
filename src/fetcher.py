@@ -2,7 +2,7 @@
 import time
 import pandas as pd
 import yfinance as yf
-import Stock_Analyzer.config as config
+import config
 
 
 def fetch_ticker(ticker: str, period: str = "5y") -> pd.DataFrame:

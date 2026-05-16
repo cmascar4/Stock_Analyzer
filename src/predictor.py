@@ -7,8 +7,8 @@ import pandas as pd
 import xgboost as xgb
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 
-import Stock_Analyzer.config as config
-from Stock_Analyzer.src.features import FEATURE_COLS, build_features, get_latest_features
+import config
+from src.features import FEATURE_COLS, build_features, get_latest_features
 
 
 class PricePredictor:
