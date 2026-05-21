@@ -252,6 +252,9 @@ if page == "🌍 Market Overview":
         st.warning("No data loaded. Check your internet connection.")
         st.stop()
 
+    ov_df.index = range(1, len(ov_df) + 1)
+    ov_df.index.name = "#"
+
     gainers = (ov_df["1D %"] > 0).sum()
     losers = (ov_df["1D %"] < 0).sum()
     trained = (ov_df["Predictor"] == "✅").sum()
@@ -513,7 +516,10 @@ elif page == "⚙️ Train Models":
             if df_t is None or len(df_t) < 300:
                 row.update({"Status": "❌ No data", "MAPE": "—", "RMSE": "—"})
                 results.append(row)
-                results_box.dataframe(pd.DataFrame(results), use_container_width=True)
+                res_df = pd.DataFrame(results)
+            res_df.index = range(1, len(res_df) + 1)
+            res_df.index.name = "#"
+            results_box.dataframe(res_df, use_container_width=True)
                 continue
 
             try:
@@ -530,7 +536,10 @@ elif page == "⚙️ Train Models":
                 row.update({"Status": f"⚠️ {str(exc)[:50]}", "MAPE": "Error", "RMSE": "Error"})
 
             results.append(row)
-            results_box.dataframe(pd.DataFrame(results), use_container_width=True)
+            res_df = pd.DataFrame(results)
+            res_df.index = range(1, len(res_df) + 1)
+            res_df.index.name = "#"
+            results_box.dataframe(res_df, use_container_width=True)
 
         status_box.success("Training complete! Clear the cache (sidebar) so the dashboard reloads fresh models.")
 
@@ -543,6 +552,9 @@ elif page == "⚙️ Train Models":
         if (config.MODELS_DIR / f"{t}_predictor.pkl").exists()
     ]
     if model_rows:
-        st.dataframe(pd.DataFrame(model_rows), use_container_width=True)
+        m_df = pd.DataFrame(model_rows)
+        m_df.index = range(1, len(m_df) + 1)
+        m_df.index.name = "#"
+        st.dataframe(m_df, use_container_width=True)
     else:
         st.caption("No models trained yet.")
